@@ -6,14 +6,14 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { changeAuthentication } from "./redux/userAuthentication";
 
-import AddUser from "./admin/AddUser";
-import ChangePassword from "./admin/ChangePassword";
 import Dashboard from "./admin/Dashboard";
 import Profile from "./admin/Profile";
-import Teachers from "./admin/Teachers";
 import AdminNav from "./components/AdminNav";
+import Signup from "./pages/Signup";
+// import { io as socketIO } from "socket.io-client";
 
 export const BASE_URL = "http://localhost:3000";
+// const socket = socketIO(BASE_URL);
 function App() {
   const dispatch = useDispatch();
   const { isAuth } = useSelector((state) => state.userAuth);
@@ -30,7 +30,7 @@ function App() {
 
   useEffect(() => {
     getAuth();
-  }, []);
+  }, [isAuth]);
 
   return (
     <>
@@ -38,21 +38,24 @@ function App() {
         {isAuth && <AdminNav />}
         <Routes>
           {/* For Unauthenticated Users */}
-          {!isAuth && <Route element={<Login />} path="/" />}
+          {!isAuth && (
+            <>
+              <Route element={<Login />} path="/" />
+              <Route element={<Signup />} path="/signup" />
+            </>
+          )}
 
           {/* If user is admin */}
           {isAuth && (
             <>
               <Route element={<Dashboard />} path="/dashboard" />
-              <Route element={<AddUser />} path="/addTeacher" />
-              <Route element={<ChangePassword />} path="/changePassword" />
-              <Route element={<Teachers />} path="/teachers" />
-              <Route element={<Profile />} path="/profile" />
+              <Route element={<Profile />} path="/profile/:userId" />
             </>
           )}
 
           {/* Redirect unauthenticated users to Login for undefined routes */}
           {!isAuth && <Route element={<Navigate to="/" />} />}
+          {isAuth && <Route element={<Navigate to="/dashboard" />} />}
         </Routes>
       </BrowserRouter>
     </>

@@ -1,17 +1,21 @@
+import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { BASE_URL } from "../App";
 
 const AdminNav = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { fullName } = useSelector((state) => state.userAuth);
+  const { fullName, userId } = useSelector((state) => state.userAuth);
   const adminNavs = [
     { text: "Dashboard", link: "/dashboard" },
-    { text: "Profile", link: "/profile" },
-    { text: "Add Teacher", link: "/addTeacher" },
-    { text: "Teachers", link: "/teachers" },
-    { text: "Change Password", link: "/changePassword" },
+    { text: "Profile", link: `/profile/${userId}` },
   ];
+
+  const logout = async () => {
+    await axios.post(`${BASE_URL}/logout`);
+    window.location.href = "/";
+  };
 
   const toggleNav = () => {
     setIsOpen(!isOpen);
@@ -45,6 +49,7 @@ const AdminNav = () => {
                   {data.text}
                 </NavLink>
               ))}
+              <button onClick={logout}>LogOut</button>
             </div>
           </div>
           <div className="-mr-2 flex md:hidden">
