@@ -1,5 +1,6 @@
 import express from "express";
 import { User } from "../schemas/schemas.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -81,6 +82,11 @@ router.post("/login", async (req, res) => {
 
 router.get("/user/:userId", async (req, res) => {
   const { userId } = req.params;
+
+  // Validate if userId is a valid ObjectId
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Invalid userId" });
+  }
 
   try {
     const user = await User.findOne({ _id: userId }).lean();
