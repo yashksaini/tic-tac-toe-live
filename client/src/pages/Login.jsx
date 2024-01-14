@@ -2,8 +2,8 @@
 // Login.jsx
 import { useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../App";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../main";
 
 const Login = () => {
   const [username, setUsername] = useState("");

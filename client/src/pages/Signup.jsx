@@ -2,7 +2,7 @@
 // Signup.jsx
 import { useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../App";
+import { BASE_URL } from "../main";
 import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
@@ -27,6 +27,7 @@ const Signup = () => {
         );
         if (response.data === true) {
           navigate("/");
+          alert("Signned Up Please Login");
           window.location.reload();
         } else {
           setShowModal(true);

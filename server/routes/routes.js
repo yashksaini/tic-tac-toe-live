@@ -1,5 +1,6 @@
 import express from "express";
 import { User } from "../schemas/schemas.js";
+
 const router = express.Router();
 
 router.get("/auth", function (req, res) {
@@ -39,8 +40,8 @@ router.post("/signup", async (req, res) => {
       fullName,
     };
     // Store data in session so user directly logged in after signup
-    req.session.userData = data;
-    req.session.save();
+    // req.session.userData = data;
+    // req.session.save();
 
     res.send(true);
   } catch (error) {
@@ -80,7 +81,6 @@ router.post("/login", async (req, res) => {
 
 router.get("/user/:userId", async (req, res) => {
   const { userId } = req.params;
-  console.log(userId);
 
   try {
     const user = await User.findOne({ _id: userId }).lean();
@@ -89,6 +89,7 @@ router.get("/user/:userId", async (req, res) => {
       const userData = {
         fullName: user.fullName,
         username: user.username,
+        userId: user._id.toString(),
       };
 
       res.json(userData);

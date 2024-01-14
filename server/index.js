@@ -17,6 +17,7 @@ const io = new Server(httpServer, {
     methods: ["GET", "POST"],
   },
 });
+
 const PORT = 3000;
 
 dotenv.config();
@@ -26,8 +27,6 @@ const password = process.env.DB_PASSWORD;
 
 const URL = `mongodb+srv://${username}:${password}@cluster0.xwisexr.mongodb.net/?retryWrites=true&w=majority`;
 Connection(username, password);
-
-console.log(URL);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -58,58 +57,72 @@ app.use(
 
 import Routes from "./routes/routes.js";
 app.use("/", Routes);
-const activeUsers = new Map();
+
+// Created a list of new logged in users
+const activeUsers = new Set();
 
 io.on("connection", (socket) => {
-  console.log(`User connected: ${socket.id}`);
+  io.emit("activeUsers", () => {}, Array.from(activeUsers));
 
-  // Check if the user already exists before adding them
-  if (!activeUsers.has(socket.id)) {
-    io.emit("userJoined", {
-      id: socket.id,
-      name: `User${socket.id.slice(0, 5)}`,
-      userId: "",
-      isLive: true,
-    });
+  socket.on("login", async (userData) => {
+    const user = {
+      userId: userData.id,
+      fullName: userData.fullName,
+      socketId: socket.id,
+    };
+    const existingUser = Array.from(activeUsers).find(
+      (user) => user.userId === userData.id
+    );
+    if (!existingUser) {
+      activeUsers.add(user);
+    }
 
-    activeUsers.set(socket.id, {
-      name: `User${socket.id.slice(0, 5)}`,
-      isLive: true,
-    });
-  }
+    activeUsers.add(user);
 
-  // Listen for a "setName" event to update the user's actual name
-  socket.on("setName_Id", (name, userId) => {
-    console.log(`User ${socket.id} set name to ${name}`);
+    io.emit("activeUsers", Array.from(activeUsers));
+  });
 
-    // Update the user's name in the activeUsers map
-    activeUsers.set(socket.id, {
-      name,
-      userId,
-      isLive: true,
-    });
-
-    // Emit event to inform all clients about the updated user information
-    io.emit("userUpdated", {
-      id: socket.id,
-      name,
-      userId,
-      isLive: true,
-    });
+  socket.on("logout", async (socketId) => {
+    const userToRemove = Array.from(activeUsers).find(
+      (user) => user.socketId === socketId
+    );
+    if (userToRemove) {
+      activeUsers.delete(userToRemove);
+    }
+    io.emit("activeUsers", Array.from(activeUsers));
   });
 
   socket.on("disconnect", () => {
-    console.log(`User disconnected: ${socket.id}`);
-    io.emit("userLeft", socket.id);
-    activeUsers.delete(socket.id);
+    // Find the user object in activeUsers and remove it
+    const disconnectedUserId = socket.id;
+    const userToRemove = Array.from(activeUsers).find(
+      (user) => user.socketId === disconnectedUserId
+    );
+    if (userToRemove) {
+      activeUsers.delete(userToRemove);
+    }
+
+    io.emit("activeUsers", Array.from(activeUsers));
+  });
+
+  // Handle profile visit event
+  socket.on("profileVisit", ({ visitedUserId, visitorName }) => {
+    // Assuming you have a user socketId saved in activeUsers
+    const visitedUser = Array.from(activeUsers).find(
+      (user) => user.userId === visitedUserId
+    );
+
+    if (visitedUser) {
+      io.to(visitedUser.socketId).emit("profileVisit", {
+        visitorName,
+        visitedUserId,
+      });
+    }
   });
 });
 
 app.get("/active-users", (req, res) => {
-  console.log(req.session.userData);
-  const usersArray = Array.from(activeUsers.values());
-  console.log("Live Users: ", usersArray);
-  res.json(usersArray);
+  res.json(Array.from(activeUsers));
 });
 
 httpServer.listen(PORT, () => {
