@@ -107,5 +107,14 @@ router.get("/user/:userId", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+router.get("/all-users", async (req, res) => {
+  try {
+    const allUsers = await User.find().lean();
+    res.json(allUsers);
+  } catch (error) {
+    console.error("Error fetching all users:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 export default router;
