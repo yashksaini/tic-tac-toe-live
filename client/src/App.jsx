@@ -15,6 +15,7 @@ import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
 import { BASE_URL } from "./main";
 import GameRoom from "./admin/GameRoom";
+import Players from "./admin/Players";
 
 function App({ socket }) {
   const dispatch = useDispatch();
@@ -120,6 +121,7 @@ function App({ socket }) {
                 element={<Dashboard socket={socket} />}
                 path="/dashboard"
               />
+              <Route element={<Players socket={socket} />} path="/players" />
               <Route
                 element={<Profile socket={socket} />}
                 path="/profile/:id"

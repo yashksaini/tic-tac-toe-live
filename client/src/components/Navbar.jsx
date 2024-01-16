@@ -67,7 +67,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 isActive
                   ? "text-white text-md flex justify-end items-center flex-col bg-dark2  rounded-tl-3xl rounded-tr-3xl"
-                  : "text-gray-700 text-md flex justify-end items-center flex-col"
+                  : "text-dark2 text-md flex justify-end items-center flex-col"
               }
             >
               <i className={item.icon}></i>
@@ -78,7 +78,7 @@ const Navbar = () => {
           );
         })}
         <button
-          className="text-gray-700 text-xl flex justify-center items-center"
+          className="text-dark2 text-xl flex justify-center items-center"
           onClick={logout}
         >
           <i className="fa-solid fa-right-from-bracket"></i>
