@@ -92,7 +92,7 @@ const Signup = () => {
               <input
                 type="text"
                 id="fullName"
-                className="w-full border rounded-md px-4 h-10 bg-white border-gray-300 text-[15px] font-medium text-black tracking-wider placeholder:font-light focus:outline-none focus:border-primary focus:border-2"
+                className="w-full border rounded-md px-4 h-10 bg-white border-gray-300 text-[15px] font-medium text-black tracking-wider placeholder:font-light focus:outline-none focus:border-primary focus:border-2 md:h-12"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Enter your full name"
@@ -108,7 +108,7 @@ const Signup = () => {
               <input
                 type="text"
                 id="username"
-                className="w-full border rounded-md px-4 h-10 bg-white border-gray-300 text-[15px] font-medium text-black tracking-wider placeholder:font-light focus:outline-none focus:border-primary focus:border-2"
+                className="w-full border rounded-md px-4 h-10 bg-white border-gray-300 text-[15px] font-medium text-black tracking-wider placeholder:font-light focus:outline-none focus:border-primary focus:border-2 md:h-12"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Choose a username"
@@ -124,7 +124,7 @@ const Signup = () => {
               <input
                 type="password"
                 id="password"
-                className="w-full border rounded-md px-4 h-10 bg-white border-gray-300 text-[15px] font-medium text-black tracking-wider placeholder:font-light focus:outline-none focus:border-primary focus:border-2"
+                className="w-full border rounded-md px-4 h-10 bg-white border-gray-300 text-[15px] font-medium text-black tracking-wider placeholder:font-light focus:outline-none focus:border-primary focus:border-2 md:h-12"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Choose a password"
@@ -132,7 +132,7 @@ const Signup = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-primary text-white rounded-md h-12 hover:bg-primaryHover focus:outline-none font-semibold"
+              className="w-full bg-primary text-white rounded-md h-12 hover:bg-primaryHover focus:outline-none font-semibold md:h-14"
             >
               Sign Up
             </button>
