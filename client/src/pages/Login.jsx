@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-// Login.jsx
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";

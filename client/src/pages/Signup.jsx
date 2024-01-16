@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-// Signup.jsx
 import { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../main";
