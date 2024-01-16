@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Dashboard from "./admin/Dashboard";
 import Profile from "./admin/Profile";
-import AdminNav from "./components/AdminNav";
+import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
 import { BASE_URL } from "./main";
 import GameRoom from "./admin/GameRoom";
@@ -96,32 +96,47 @@ function App({ socket }) {
   };
   return (
     <>
-      {isAuth && <AdminNav />}
-      <Routes>
-        {/* For Unauthenticated Users */}
-        {!isAuth && (
-          <>
-            <Route element={<Login />} path="/" />
-            <Route element={<Signup />} path="/signup" />
-          </>
-        )}
+      {isAuth && <Navbar />}
+      <div
+        className={`${
+          isAuth
+            ? "pb-[72px] md:pb-0 md:w-[calc(100%_-_320px)] md:ml-[320px]"
+            : ""
+        }`}
+      >
+        <Routes>
+          {/* For Unauthenticated Users */}
+          {!isAuth && (
+            <>
+              <Route element={<Login />} path="/" />
+              <Route element={<Signup />} path="/signup" />
+            </>
+          )}
 
-        {/* If user is admin */}
-        {isAuth && (
-          <>
-            <Route element={<Dashboard socket={socket} />} path="/dashboard" />
-            <Route element={<Profile socket={socket} />} path="/profile/:id" />
-            <Route
-              element={<GameRoom socket={socket} />}
-              path="/game-room/:roomId"
-            />
-          </>
-        )}
+          {/* If user is admin */}
+          {isAuth && (
+            <>
+              <Route
+                element={<Dashboard socket={socket} />}
+                path="/dashboard"
+              />
+              <Route
+                element={<Profile socket={socket} />}
+                path="/profile/:id"
+              />
+              <Route
+                element={<GameRoom socket={socket} />}
+                path="/game-room/:roomId"
+              />
+            </>
+          )}
 
-        {/* Redirect unauthenticated users to Login for undefined routes */}
-        {!isAuth && <Route element={<Navigate to="/" />} />}
-        {isAuth && <Route element={<Navigate to="/dashboard" />} />}
-      </Routes>
+          {/* Redirect unauthenticated users to Login for undefined routes */}
+          {!isAuth && <Route element={<Navigate to="/" />} />}
+          {isAuth && <Route element={<Navigate to="/dashboard" />} />}
+        </Routes>
+      </div>
+
       <ToastContainer position="top-center" autoClose={5000} />
       {/* Challenge Popup */}
       {showChallengePopup && (

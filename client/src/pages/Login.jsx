@@ -37,14 +37,14 @@ const Login = () => {
         );
         if (response.data === true) {
           toast.success("Logging In", {
-            autoClose: 1000, // Set duration to 1000ms
+            autoClose: 1000,
           });
           setTimeout(() => {
             window.location.href = "/dashboard";
           }, 1000);
         } else {
           toast.error("Username or Password is incorrect", {
-            autoClose: 1000, // Set duration to 1000ms
+            autoClose: 1000,
           });
         }
       } catch (error) {
@@ -59,7 +59,7 @@ const Login = () => {
       <div className="max-w-full w-[420px] lg:w-[520px] p-8">
         <div className="w-full flex flex-1 gap-1 justify-start items-center">
           <img src="logo.png" alt="Logo" className="w-10 h-10 " />
-          <span className=" text-gray-700 text-xl font-bold tracking-tighter">
+          <span className=" text-gray-700 text-xl font-bold tracking-tighter mt-[4px]">
             CONNECT
           </span>
         </div>
