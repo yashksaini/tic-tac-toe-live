@@ -58,7 +58,7 @@ const Navbar = () => {
         </button>
       </div>
       {/* Mobile Navbar */}
-      <div className="w-full grid grid-cols-4 overflow-hidden gap-2 fixed bottom-0 left-0 h-16 bg-primary rounded-tl-3xl rounded-tr-3xl md:hidden">
+      <div className="w-full grid grid-cols-4 overflow-hidden gap-2 fixed bottom-0 left-0 h-16 bg-background rounded-tl-3xl rounded-tr-3xl md:hidden">
         {navLinks.map((item, index) => {
           return (
             <NavLink
@@ -67,7 +67,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 isActive
                   ? "text-white text-md flex justify-end items-center flex-col bg-dark2  rounded-tl-3xl rounded-tr-3xl"
-                  : "text-white text-md flex justify-end items-center flex-col"
+                  : "text-gray-700 text-md flex justify-end items-center flex-col"
               }
             >
               <i className={item.icon}></i>
@@ -78,7 +78,7 @@ const Navbar = () => {
           );
         })}
         <button
-          className="text-white text-xl flex justify-center items-center"
+          className="text-gray-700 text-xl flex justify-center items-center"
           onClick={logout}
         >
           <i className="fa-solid fa-right-from-bracket"></i>
