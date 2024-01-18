@@ -1,5 +1,5 @@
 import express from "express";
-import { User } from "../schemas/schemas.js";
+import { User, Profile } from "../schemas/schemas.js";
 import mongoose from "mongoose";
 
 const router = express.Router();
@@ -92,10 +92,19 @@ router.get("/user/:userId", async (req, res) => {
     const user = await User.findOne({ _id: userId }).lean();
 
     if (user) {
+      const profile = await Profile.findOne({ user: userId }).lean();
+
       const userData = {
         fullName: user.fullName,
         username: user.username,
         userId: user._id.toString(),
+        banner: profile ? profile.banner : "",
+        about: profile ? profile.about : "",
+        profileImage: profile ? profile.profileImage : "",
+        gamesPlayed: profile ? profile.gamesPlayed : 0,
+        gamesWon: profile ? profile.gamesWon : 0,
+        gamesDrawn: profile ? profile.gamesDrawn : 0,
+        gamesLost: profile ? profile.gamesLost : 0,
       };
 
       res.json(userData);

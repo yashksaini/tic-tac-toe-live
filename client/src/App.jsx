@@ -46,7 +46,7 @@ function App({ socket }) {
     getAuth();
     socket.on("profileVisit", ({ visitedUserId, visitorName }) => {
       console.log(visitedUserId);
-      toast.info(`${visitorName} visited your profile.`);
+      toast(`${visitorName} visited your profile.`);
     });
 
     socket.on("alreadyInRoom", ({ message }) => {
@@ -139,7 +139,7 @@ function App({ socket }) {
         </Routes>
       </div>
 
-      <ToastContainer position="top-center" autoClose={5000} />
+      <ToastContainer position="top-right" autoClose={5000} />
       {/* Challenge Popup */}
       {showChallengePopup && (
         <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">

@@ -7,6 +7,7 @@ import { BASE_URL } from "../main";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HomeBanner from "../components/HomeBanner";
+import logo from "@assets/logo.png";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -58,7 +59,7 @@ const Login = () => {
       <HomeBanner />
       <div className="max-w-full w-[420px] lg:w-[520px] p-8">
         <div className="w-full flex flex-1 gap-1 justify-start items-center">
-          <img src="logo.png" alt="Logo" className="w-10 h-10 " />
+          <img src={logo} alt="Logo" className="w-10 h-10 " />
           <span className=" text-gray-700 text-xl font-bold tracking-tighter mt-[4px]">
             CONNECT
           </span>
