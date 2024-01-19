@@ -39,7 +39,7 @@ const Players = () => {
       </div>
       <div className="w-full mt-20">
         <h1 className="w-full text-center text-2xl text-dark1 font-bold">
-          Server Users List
+          Server Players List
         </h1>
         <p className="w-full text-center text-xl text-gray-500 font-medium">
           #visitprofile

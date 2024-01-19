@@ -43,7 +43,7 @@ const Profile = ({ socket }) => {
   }, [fullName, id, socket, userId]);
 
   return (
-    <div className="">
+    <>
       {userExists ? (
         <>
           <div className="h-40 w-full bg-dark2 rounded-bl-[32px] rounded-br-[32px] md:rounded-none">
@@ -102,7 +102,7 @@ const Profile = ({ socket }) => {
           </p>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

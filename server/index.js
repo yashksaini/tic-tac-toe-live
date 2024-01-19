@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { v4 as uuidv4 } from "uuid";
+import { Room } from "./schemas/schemas.js";
 
 const app = express();
 const httpServer = createServer(app);
@@ -247,6 +248,30 @@ app.get("/room-board/:roomId", (req, res) => {
     res.json(roomData);
   } else {
     res.status(404).json({ message: "Room not found" });
+  }
+});
+
+app.post("/game-completed", async (req, res) => {
+  const { roomId, winnerId, isWinner, board, challenger, challengedTo } =
+    req.body;
+  try {
+    const newRoom = new Room({
+      roomId,
+      winner: winnerId,
+      isWinner,
+      board,
+      challenger,
+      challengedTo,
+    });
+    await newRoom.save();
+    res.send(true);
+    console.log("ROOM ADDED TO DB");
+
+    if (rooms.has(roomId)) {
+      rooms.delete(roomId);
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 

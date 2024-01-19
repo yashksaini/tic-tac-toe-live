@@ -68,6 +68,7 @@ function App({ socket }) {
       navigate(`/game-room/${roomId}`, {
         state: {
           playerNames: [challenger.fullName, challengedTo.fullName],
+          playerIds: [challenger.userId, challengedTo.userId],
         },
       });
     });
@@ -117,10 +118,7 @@ function App({ socket }) {
           {/* If user is admin */}
           {isAuth && (
             <>
-              <Route
-                element={<Dashboard socket={socket} />}
-                path="/dashboard"
-              />
+              <Route element={<Dashboard socket={socket} />} path="/" />
               <Route element={<Players socket={socket} />} path="/players" />
               <Route
                 element={<Profile socket={socket} />}
@@ -135,7 +133,6 @@ function App({ socket }) {
 
           {/* Redirect unauthenticated users to Login for undefined routes */}
           {!isAuth && <Route element={<Navigate to="/" />} />}
-          {isAuth && <Route element={<Navigate to="/dashboard" />} />}
         </Routes>
       </div>
 

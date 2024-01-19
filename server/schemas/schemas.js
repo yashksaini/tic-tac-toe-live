@@ -23,3 +23,15 @@ const profileSchema = mongoose.Schema({
 });
 
 export const Profile = mongoose.model("profiles", profileSchema);
+
+// Rooms Schema
+const roomsSchema = mongoose.Schema({
+  roomId: { type: String, unique: true },
+  challenger: { type: String, unique: false },
+  challengedTo: { type: String, unique: false },
+  winner: { type: String, default: "" },
+  isWinner: { type: Boolean },
+  board: { type: Array },
+});
+
+export const Room = mongoose.model("rooms", roomsSchema);

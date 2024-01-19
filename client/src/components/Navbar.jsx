@@ -7,7 +7,7 @@ import logo from "@assets/logo.png";
 const Navbar = () => {
   const { fullName, userId } = useSelector((state) => state.userAuth);
   const navLinks = [
-    { text: "Home", link: "/dashboard", icon: "fa-solid fa-house" },
+    { text: "Home", link: "/", icon: "fa-solid fa-house" },
     { text: "Profile", link: `/profile/${userId}`, icon: "fa-solid fa-user" },
     { text: "Players", link: "/players", icon: "fa-solid fa-users" },
   ];

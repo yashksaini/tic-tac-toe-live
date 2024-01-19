@@ -41,7 +41,7 @@ const Login = () => {
             autoClose: 1000,
           });
           setTimeout(() => {
-            window.location.href = "/dashboard";
+            window.location.href = "/";
           }, 1000);
         } else {
           toast.error("Username or Password is incorrect", {
