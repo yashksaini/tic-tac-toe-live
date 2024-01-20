@@ -10,6 +10,11 @@ const Navbar = () => {
     { text: "Home", link: "/", icon: "fa-solid fa-house" },
     { text: "Profile", link: `/profile/${userId}`, icon: "fa-solid fa-user" },
     { text: "Players", link: "/players", icon: "fa-solid fa-users" },
+    {
+      text: "Visits",
+      link: "/visits",
+      icon: "fa-solid fa-users-between-lines",
+    },
   ];
 
   const logout = async () => {

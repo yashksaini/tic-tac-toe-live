@@ -16,6 +16,7 @@ import Signup from "./pages/Signup";
 import { BASE_URL } from "./main";
 import GameRoom from "./admin/GameRoom";
 import Players from "./admin/Players";
+import ProfileVisits from "./admin/ProfileVisits";
 
 function App({ socket }) {
   const dispatch = useDispatch();
@@ -120,6 +121,10 @@ function App({ socket }) {
             <>
               <Route element={<Dashboard socket={socket} />} path="/" />
               <Route element={<Players socket={socket} />} path="/players" />
+              <Route
+                element={<ProfileVisits socket={socket} />}
+                path="/visits"
+              />
               <Route
                 element={<Profile socket={socket} />}
                 path="/profile/:id"
