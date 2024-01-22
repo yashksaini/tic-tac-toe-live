@@ -5,7 +5,7 @@ import TicTacToeBoard from "../components/TicTacToeBoard";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import gameImage from "@assets/game_room.jpg";
-import logo from "@assets/logo.png";
+import Banner from "../components/Banner";
 
 let isCompleted = false;
 const GameRoom = ({ socket }) => {
@@ -67,19 +67,7 @@ const GameRoom = ({ socket }) => {
 
   return (
     <>
-      <div className="h-40 w-full bg-dark2 rounded-bl-[32px] rounded-br-[32px] md:rounded-none">
-        <div className="w-full flex flex-1 gap-1 justify-center items-center py-4">
-          <img src={logo} alt="Logo" className="w-10 h-10 " />
-          <span className="text-white text-xl font-bold tracking-tighter mt-[4px]">
-            CONNECT
-          </span>
-        </div>
-        <img
-          src={gameImage}
-          alt="Profile"
-          className="m-auto w-40 h-40 rounded-full shadow-md"
-        />
-      </div>
+      <Banner bannerImage={gameImage} heading={""} subheading={""} />
 
       <TicTacToeBoard
         socket={socket}

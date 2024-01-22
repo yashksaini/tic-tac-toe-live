@@ -3,8 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../main";
 import { useSelector } from "react-redux";
-import logo from "@assets/logo.png";
 import activeLogo from "@assets/active_users.jpg";
+import Banner from "../components/Banner";
 
 const Dashboard = ({ socket }) => {
   const [activeUsers, setActiveUsers] = useState([]);
@@ -42,27 +42,11 @@ const Dashboard = ({ socket }) => {
 
   return (
     <>
-      <div className="h-40 w-full bg-dark2 rounded-bl-[32px] rounded-br-[32px] md:rounded-none">
-        <div className="w-full flex flex-1 gap-1 justify-center items-center py-4">
-          <img src={logo} alt="Logo" className="w-10 h-10 " />
-          <span className="text-white text-xl font-bold tracking-tighter mt-[4px]">
-            CONNECT
-          </span>
-        </div>
-        <img
-          src={activeLogo}
-          alt="Profile"
-          className="m-auto w-40 h-40 rounded-full shadow-md"
-        />
-      </div>
-      <div className="w-full mt-20">
-        <h1 className="w-full text-center text-2xl text-dark1 font-bold">
-          Active Players List
-        </h1>
-        <p className="w-full text-center text-xl text-gray-500 font-medium">
-          #challange&win
-        </p>
-      </div>
+      <Banner
+        bannerImage={activeLogo}
+        heading={"Active Players List"}
+        subheading={"#challange&win"}
+      />
       <div className="p-4 w-full border-t mt-4 md:max-w-lg md:mx-auto md:p-0">
         {activeUsers?.map((user) => (
           <div

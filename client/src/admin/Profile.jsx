@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { BASE_URL } from "../main";
 import { useSelector } from "react-redux";
 import profileImage from "@assets/default_profile.jpg";
-import logo from "@assets/logo.png";
+import Banner from "../components/Banner";
 
 const Profile = ({ socket }) => {
   const [userData, setUserData] = useState({});
@@ -46,27 +46,11 @@ const Profile = ({ socket }) => {
     <>
       {userExists ? (
         <>
-          <div className="h-40 w-full bg-dark2 rounded-bl-[32px] rounded-br-[32px] md:rounded-none">
-            <div className="w-full flex flex-1 gap-1 justify-center items-center py-4">
-              <img src={logo} alt="Logo" className="w-10 h-10 " />
-              <span className="text-white text-xl font-bold tracking-tighter mt-[4px]">
-                CONNECT
-              </span>
-            </div>
-            <img
-              src={profileImage}
-              alt="Profile"
-              className="m-auto w-40 h-40 rounded-full shadow-md"
-            />
-          </div>
-          <div className="w-full mt-20">
-            <h1 className="w-full text-center text-2xl text-dark1 font-bold">
-              {userData?.fullName}
-            </h1>
-            <p className="w-full text-center text-xl text-gray-500 font-medium">
-              @{userData?.username}
-            </p>
-          </div>
+          <Banner
+            bannerImage={profileImage}
+            heading={userData?.fullName}
+            subheading={"@" + userData?.username}
+          />
           <div className="w-full p-4 border-t mt-4 grid grid-cols-2 gap-4 text-dark1 md:max-w-lg md:mx-auto">
             <div className=" bg-background  text-center rounded-xl p-8 border">
               <span className="text-[48px] font-bold">
