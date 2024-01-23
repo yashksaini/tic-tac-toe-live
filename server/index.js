@@ -9,7 +9,7 @@ import cookieParser from "cookie-parser";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { v4 as uuidv4 } from "uuid";
-import { Room } from "./schemas/schemas.js";
+import { Room, ProfileVisit } from "./schemas/schemas.js";
 
 const app = express();
 const httpServer = createServer(app);
@@ -115,19 +115,32 @@ io.on("connection", (socket) => {
   });
 
   // Handle profile visit event
-  socket.on("profileVisit", ({ visitedUserId, visitorName }) => {
-    // Assuming you have a user socketId saved in activeUsers
-    const visitedUser = Array.from(activeUsers).find(
-      (user) => user.userId === visitedUserId
-    );
+  socket.on(
+    "profileVisit",
+    async ({ visitedUserId, visitorName, visitorId }) => {
+      // Assuming you have a user socketId saved in activeUsers
+      try {
+        const visitedUser = Array.from(activeUsers).find(
+          (user) => user.userId === visitedUserId
+        );
+        // Add the profile visit data to the database
+        await ProfileVisit.findOneAndUpdate(
+          { visitorId, visitedUserId },
+          { timestamp: new Date() },
+          { upsert: true, new: true } // upsert: true performs an update or insert, new: true returns the updated document
+        );
 
-    if (visitedUser) {
-      io.to(visitedUser.socketId).emit("profileVisit", {
-        visitorName,
-        visitedUserId,
-      });
+        if (visitedUser) {
+          io.to(visitedUser.socketId).emit("profileVisit", {
+            visitorName,
+            visitedUserId,
+          });
+        }
+      } catch (error) {
+        console.error("Error handling profile visit:", error);
+      }
     }
-  });
+  );
 
   // Challenge Logic
   socket.on("sendChallenge", ({ opponentId, challenger }) => {

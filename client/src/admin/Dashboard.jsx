@@ -48,25 +48,33 @@ const Dashboard = ({ socket }) => {
         subheading={"#challange&win"}
       />
       <div className="p-4 w-full border-t mt-4 md:max-w-lg md:mx-auto md:p-0">
-        {activeUsers?.map((user) => (
-          <div
-            key={user.userId}
-            className="flex items-center justify-between w-full px-4 py-2 md:py-4 bg-background border text-dark1 rounded mt-4 gap-2"
-          >
-            <span className="text-xl font-bold flex-1">
-              {user.fullName === fullName ? "You" : user.fullName}{" "}
-              <i className="fa-regular fa-circle-dot ml-2 text-green-500 text-sm"></i>
-            </span>
-            {user.userId !== userId ? (
-              <button
-                className="border rounded-md text-xs px-3 py-2 bg-white font-semibold"
-                onClick={() => sendChallenge(user)}
-              >
-                Challenge
-              </button>
-            ) : null}
+        {activeUsers
+          ?.filter((data) => data.fullName !== fullName)
+          ?.map((user) => (
+            <div
+              key={user.userId}
+              className="flex items-center justify-between w-full px-4 py-2 md:py-4 bg-background border text-dark1 rounded mt-4 gap-2"
+            >
+              <span className="text-xl font-bold flex-1">
+                {user.fullName}
+                <i className="fa-regular fa-circle-dot ml-2 text-green-500 text-sm"></i>
+              </span>
+              {user.userId !== userId ? (
+                <button
+                  className="border rounded-md text-xs px-3 py-2 bg-white font-semibold"
+                  onClick={() => sendChallenge(user)}
+                >
+                  Challenge
+                </button>
+              ) : null}
+            </div>
+          ))}
+        {activeUsers?.filter((data) => data.fullName !== fullName).length ===
+        0 ? (
+          <div className="text-center text-gray-500 my-4">
+            No active users right now
           </div>
-        ))}
+        ) : null}
       </div>
     </>
   );

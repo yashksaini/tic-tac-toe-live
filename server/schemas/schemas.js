@@ -35,3 +35,23 @@ const roomsSchema = mongoose.Schema({
 });
 
 export const Room = mongoose.model("rooms", roomsSchema);
+
+const profileVisitSchema = new mongoose.Schema({
+  visitorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User,
+    required: true,
+  },
+  visitedUserId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User,
+    required: true,
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
+});
+
+export const ProfileVisit = mongoose.model("ProfileVisit", profileVisitSchema);

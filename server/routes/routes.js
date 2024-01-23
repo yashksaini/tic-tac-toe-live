@@ -1,5 +1,5 @@
 import express from "express";
-import { User, Profile } from "../schemas/schemas.js";
+import { User, Profile, ProfileVisit } from "../schemas/schemas.js";
 import mongoose from "mongoose";
 
 const router = express.Router();
@@ -122,6 +122,20 @@ router.get("/all-users", async (req, res) => {
     res.json(allUsers);
   } catch (error) {
     console.error("Error fetching all users:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.get("/profile-visitors", async (req, res) => {
+  try {
+    const userId = req.query.userId;
+    const visitedUsers = await ProfileVisit.find({ visitedUserId: userId })
+      .populate("visitorId", "fullName") // Specify the fields you want to populate
+      .sort({ timestamp: -1 }) // Sort by timestamp in descending order
+      .exec();
+    res.json(visitedUsers);
+  } catch (error) {
+    console.error("Error fetching profile visitors:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });

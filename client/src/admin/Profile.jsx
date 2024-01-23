@@ -31,6 +31,7 @@ const Profile = ({ socket }) => {
           socket.emit("profileVisit", {
             visitedUserId: id,
             visitorName: fullName, // Send the name of the visitor
+            visitorId: userId, // Send the userId of the visitor
           });
         }
       } catch (error) {
