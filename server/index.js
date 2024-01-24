@@ -238,6 +238,8 @@ io.on("connection", (socket) => {
       if (rooms.has(roomId)) {
         rooms.delete(roomId);
       }
+      let winnerId = roomData.users.filter((user) => user.userId != userId)[0]
+        .userId;
       // Emit the updated board to all other players in the room using their userId
       userIdsInRoom.forEach((userId) => {
         const userSocket = Array.from(activeUsers).find(
@@ -247,7 +249,14 @@ io.on("connection", (socket) => {
           io.to(userSocket).emit("playerLeft", { fullName: fullName });
         }
       });
-
+      handleGameCompletion(
+        roomId,
+        winnerId,
+        true,
+        roomData.board,
+        roomData.users[1].userId,
+        roomData.users[0].userId
+      );
       console.log("ROOM LEAVED", roomId);
     }
   });
@@ -268,6 +277,29 @@ app.post("/game-completed", async (req, res) => {
   const { roomId, winnerId, isWinner, board, challenger, challengedTo } =
     req.body;
   try {
+    handleGameCompletion(
+      roomId,
+      winnerId,
+      isWinner,
+      board,
+      challenger,
+      challengedTo
+    );
+    res.send(true);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+async function handleGameCompletion(
+  roomId,
+  winnerId,
+  isWinner,
+  board,
+  challenger,
+  challengedTo
+) {
+  try {
     const newRoom = new Room({
       roomId,
       winner: winnerId,
@@ -275,18 +307,18 @@ app.post("/game-completed", async (req, res) => {
       board,
       challenger,
       challengedTo,
+      timestamp: new Date(),
     });
     await newRoom.save();
-    res.send(true);
     console.log("ROOM ADDED TO DB");
 
     if (rooms.has(roomId)) {
       rooms.delete(roomId);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
-});
+}
 
 app.get("/active-users", (req, res) => {
   res.json(Array.from(activeUsers));

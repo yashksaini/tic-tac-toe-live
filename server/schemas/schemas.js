@@ -32,6 +32,11 @@ const roomsSchema = mongoose.Schema({
   winner: { type: String, default: "" },
   isWinner: { type: Boolean },
   board: { type: Array },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
 });
 
 export const Room = mongoose.model("rooms", roomsSchema);

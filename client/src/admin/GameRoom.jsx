@@ -20,6 +20,16 @@ const GameRoom = ({ socket }) => {
     isCompleted = true;
   };
 
+  // Add an event listener for beforeunload
+  window.addEventListener("beforeunload", () => {
+    // Emit the leaveRoom event
+    socket.emit("leaveRoom", {
+      roomId: roomId,
+      userId: userId,
+      fullName: fullName,
+    });
+  });
+
   useEffect(() => {
     // Extract the player names from the location state
     const { state } = location;
@@ -41,6 +51,7 @@ const GameRoom = ({ socket }) => {
         userId: userId,
         fullName: fullName,
       });
+      isCompleted = false;
       toast.info("You left the room");
     };
 
@@ -48,6 +59,7 @@ const GameRoom = ({ socket }) => {
       // Handle the playerLeft event
       socket.on("playerLeft", ({ fullName }) => {
         toast.warning(`${fullName} has left. +2 Points`);
+        isCompleted = false;
         setTimeout(() => {
           navigate("/");
         }, 1000);
@@ -56,8 +68,6 @@ const GameRoom = ({ socket }) => {
 
     // Clean up function to be executed on component unmount
     return () => {
-      console.log(isCompleted, "COMPONENT UNMOUNT");
-
       if (!isCompleted) {
         socket.off("playerLeft");
         cleanup();

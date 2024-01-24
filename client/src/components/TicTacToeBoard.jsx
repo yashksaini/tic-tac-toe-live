@@ -26,7 +26,6 @@ const TicTacToeBoard = ({
       const { board, isXNext } = response.data;
       setBoard(board);
       setIsXNext(isXNext);
-      console.log("Initial Data", response.data);
     } catch (error) {
       console.error("Error fetching board data:", error);
       toast.error("Error fetching board data");
@@ -157,9 +156,7 @@ const TicTacToeBoard = ({
 
   // Helper function to render player icon and information
   const renderPlayerIcon = (isCurrentPlayer, symbol, playerName, fullName) => {
-    const iconClassName = `fa-regular fa-circle-dot text-green-500 ${
-      isCurrentPlayer ? "" : "hidden"
-    }`;
+    const iconClassName = `text-green-500 ${isCurrentPlayer ? "" : "hidden"}`;
 
     return (
       <>
@@ -168,16 +165,14 @@ const TicTacToeBoard = ({
             isCurrentPlayer ? "border-green-500 bg-green-50" : ""
           }`}
         >
-          <i className={iconClassName}></i>
+          <span className={iconClassName}>{symbol}</span>
         </span>
         <span
           className={`text-sm font-bold rounded-md h-10 flex-1 px-4 flex justify-start items-center bg-background text-${
             isCurrentPlayer ? "primary" : "dark1"
           } border`}
         >
-          {`${symbol} - ${playerName} ${
-            playerName === fullName ? "(You)" : ""
-          }`}
+          {`${playerName} ${playerName === fullName ? "(You)" : ""}`}
         </span>
       </>
     );
