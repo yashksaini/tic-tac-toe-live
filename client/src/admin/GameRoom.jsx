@@ -16,8 +16,8 @@ const GameRoom = ({ socket }) => {
   const [playerIds, setPlayerIds] = useState([]);
   const { userId, fullName } = useSelector((state) => state.userAuth);
 
-  const updateIsCompleted = () => {
-    isCompleted = true;
+  const updateIsCompleted = (value) => {
+    isCompleted = value;
   };
 
   // Add an event listener for beforeunload
@@ -51,19 +51,20 @@ const GameRoom = ({ socket }) => {
         userId: userId,
         fullName: fullName,
       });
-      isCompleted = false;
       toast.info("You left the room");
+      isCompleted = false;
     };
 
     if (!isCompleted) {
       // Handle the playerLeft event
       socket.on("playerLeft", ({ fullName }) => {
         toast.warning(`${fullName} has left. +2 Points`);
-        isCompleted = false;
         setTimeout(() => {
           navigate("/");
         }, 1000);
       });
+
+      isCompleted = false;
     }
 
     // Clean up function to be executed on component unmount
@@ -71,6 +72,7 @@ const GameRoom = ({ socket }) => {
       if (!isCompleted) {
         socket.off("playerLeft");
         cleanup();
+        isCompleted = false;
       }
     };
   }, [location, roomId, userId, navigate, socket, fullName]);

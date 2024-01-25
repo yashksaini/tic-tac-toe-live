@@ -9,7 +9,7 @@ import cookieParser from "cookie-parser";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { v4 as uuidv4 } from "uuid";
-import { Room, ProfileVisit } from "./schemas/schemas.js";
+import { Room, ProfileVisit, Profile } from "./schemas/schemas.js";
 
 const app = express();
 const httpServer = createServer(app);
@@ -291,6 +291,48 @@ app.post("/game-completed", async (req, res) => {
   }
 });
 
+async function handleProfileUpdate(user, incData) {
+  await Profile.findOneAndUpdate(
+    { user: user },
+    {
+      $inc: incData,
+    },
+    { upsert: true, new: true }
+  );
+  console.log("Data updated");
+}
+async function handleUserStatsUpdates(
+  winnerId,
+  challenger,
+  challengedTo,
+  isWinner
+) {
+  //If the game is drawn
+  if (!isWinner) {
+    const incData = {
+      gamesPlayed: 1,
+      gamesDrawn: 1,
+    };
+    handleProfileUpdate(challenger, incData);
+    handleProfileUpdate(challengedTo, incData);
+  } //If the game won by one user
+  else {
+    let loserId = challengedTo;
+    if (challenger !== winnerId) {
+      loserId = challenger;
+    }
+    const wincData = {
+      gamesPlayed: 1,
+      gamesWon: 1,
+    };
+    const lincData = {
+      gamesPlayed: 1,
+      gamesLost: 1,
+    };
+    handleProfileUpdate(winnerId, wincData);
+    handleProfileUpdate(loserId, lincData);
+  }
+}
 async function handleGameCompletion(
   roomId,
   winnerId,
@@ -310,7 +352,7 @@ async function handleGameCompletion(
       timestamp: new Date(),
     });
     await newRoom.save();
-    console.log("ROOM ADDED TO DB");
+    handleUserStatsUpdates(winnerId, challenger, challengedTo, isWinner);
 
     if (rooms.has(roomId)) {
       rooms.delete(roomId);

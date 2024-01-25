@@ -127,6 +127,9 @@ const TicTacToeBoard = ({
     if (winner) {
       const winnerId = isXNext ? playerIds[0] : playerIds[1];
       updateIsCompleted(true);
+      setTimeout(() => {
+        updateIsCompleted(false);
+      }, 7000);
       if (playerIds[0] === userId) {
         const data = {
           roomId,
@@ -140,6 +143,9 @@ const TicTacToeBoard = ({
       }
     } else if (!winner && board.every((square) => square !== null)) {
       updateIsCompleted(true);
+      setTimeout(() => {
+        updateIsCompleted(false);
+      }, 7000);
       if (playerIds[0] === userId) {
         const data = {
           roomId,
