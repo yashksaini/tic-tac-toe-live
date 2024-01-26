@@ -366,6 +366,11 @@ async function handleGameCompletion(
 app.get("/active-users", (req, res) => {
   res.json(Array.from(activeUsers));
 });
+app.get("/check-server-status", (req, res) => {
+  const isServerActive = true;
+
+  res.json({ active: isServerActive });
+});
 
 httpServer.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

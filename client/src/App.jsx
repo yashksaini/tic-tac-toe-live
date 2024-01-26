@@ -97,6 +97,31 @@ function App({ socket }) {
 
     setShowChallangePopup(false);
   };
+  useEffect(() => {
+    const checkServerStatus = async () => {
+      try {
+        await axios.get(`${BASE_URL}/check-server-status`);
+      } catch (error) {
+        toast.warning("Server is sleeping", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: false,
+          closeOnClick: false,
+          closeButton: false,
+          draggable: false,
+        });
+        toast.success("Wait for 10s and reload", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 10000,
+          closeOnClick: false,
+          closeButton: false,
+          draggable: false,
+          delay: 1000,
+        });
+      }
+    };
+    checkServerStatus();
+  }, []);
+
   return (
     <>
       {isAuth && <Navbar />}
