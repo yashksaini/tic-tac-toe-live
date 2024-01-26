@@ -52,7 +52,6 @@ const GameRoom = ({ socket }) => {
         fullName: fullName,
       });
       toast.info("You left the room");
-      isCompleted = false;
     };
 
     if (!isCompleted) {
@@ -63,8 +62,6 @@ const GameRoom = ({ socket }) => {
           navigate("/");
         }, 1000);
       });
-
-      isCompleted = false;
     }
 
     // Clean up function to be executed on component unmount

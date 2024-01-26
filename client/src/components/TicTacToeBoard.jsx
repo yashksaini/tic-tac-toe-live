@@ -54,7 +54,6 @@ const TicTacToeBoard = ({
         closeButton: false,
         draggable: false,
         toastId: roomId + points.toLowerCase(),
-        delay: 2000,
       });
     }
 
@@ -113,23 +112,20 @@ const TicTacToeBoard = ({
       const status = `Winner is ${winnerName}`;
       const points = winnerName === fullName ? "+2 Points" : "0 Points";
 
-      handleGameEnd(status, points, 5500);
+      handleGameEnd(status, points, 3000);
     }
   }, [fullName, isXNext, navigate, playerNames, roomId, winner]);
 
   useEffect(() => {
     if (!winner && board.every((square) => square !== null)) {
-      handleGameEnd("Match is drawn", "+1 Points", 3500);
+      handleGameEnd("Match is drawn", "+1 Points", 3000);
     }
   }, [board, winner, roomId, navigate]);
 
   useEffect(() => {
     if (winner) {
       const winnerId = isXNext ? playerIds[0] : playerIds[1];
-      updateIsCompleted(true);
-      setTimeout(() => {
-        updateIsCompleted(false);
-      }, 7000);
+
       if (playerIds[0] === userId) {
         const data = {
           roomId,
@@ -140,12 +136,12 @@ const TicTacToeBoard = ({
           challengedTo: playerIds[1],
         };
         axios.post(`${BASE_URL}/game-completed`, data);
+        updateIsCompleted(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 3500);
       }
     } else if (!winner && board.every((square) => square !== null)) {
-      updateIsCompleted(true);
-      setTimeout(() => {
-        updateIsCompleted(false);
-      }, 7000);
       if (playerIds[0] === userId) {
         const data = {
           roomId,
@@ -156,6 +152,10 @@ const TicTacToeBoard = ({
           challengedTo: playerIds[1],
         };
         axios.post(`${BASE_URL}/game-completed`, data);
+        updateIsCompleted(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 3500);
       }
     }
   }, [board, isXNext, playerIds, roomId, socket, updateIsCompleted, winner]);

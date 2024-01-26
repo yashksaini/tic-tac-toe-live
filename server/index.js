@@ -167,7 +167,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("acceptChallenge", ({ roomId, challenger, challengedTo }) => {
-    console.log("Challange Accepted");
     // Join the receiver to the room
     if (isPlayerInRoom(challenger.userId)) {
       socket.emit("alreadyInRoom", { message: "Player joined another room." });

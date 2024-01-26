@@ -64,7 +64,7 @@ function App({ socket }) {
       if (challengedTo.fullName === currName) {
         toast.success("You Accepted the challange");
       } else {
-        toast.success(`${challengedTo.fullName} accepted your challange.`);
+        toast.success(`${challengedTo.fullName} accepted challange.`);
       }
       navigate(`/game-room/${roomId}`, {
         state: {
