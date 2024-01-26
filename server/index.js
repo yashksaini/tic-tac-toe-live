@@ -312,6 +312,7 @@ async function handleUserStatsUpdates(
     const incData = {
       gamesPlayed: 1,
       gamesDrawn: 1,
+      points: 1,
     };
     handleProfileUpdate(challenger, incData);
     handleProfileUpdate(challengedTo, incData);
@@ -324,6 +325,7 @@ async function handleUserStatsUpdates(
     const wincData = {
       gamesPlayed: 1,
       gamesWon: 1,
+      points: 2,
     };
     const lincData = {
       gamesPlayed: 1,

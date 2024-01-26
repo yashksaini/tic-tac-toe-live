@@ -20,6 +20,7 @@ const profileSchema = mongoose.Schema({
   gamesWon: { type: Number, default: 0 },
   gamesDrawn: { type: Number, default: 0 },
   gamesLost: { type: Number, default: 0 },
+  points: { type: Number, default: 0 },
 });
 
 export const Profile = mongoose.model("profiles", profileSchema);
