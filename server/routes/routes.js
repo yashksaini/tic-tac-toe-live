@@ -105,6 +105,7 @@ router.get("/user/:userId", async (req, res) => {
         gamesWon: profile ? profile.gamesWon : 0,
         gamesDrawn: profile ? profile.gamesDrawn : 0,
         gamesLost: profile ? profile.gamesLost : 0,
+        points: profile ? profile.points : 0,
       };
 
       res.json(userData);
@@ -137,6 +138,21 @@ router.get("/profile-visitors", async (req, res) => {
   } catch (error) {
     console.error("Error fetching profile visitors:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+router.put("/update-image", async (req, res) => {
+  const { profileImage, userId } = req.body;
+
+  try {
+    await Profile.findOneAndUpdate(
+      { user: userId },
+      { profileImage: profileImage },
+      { new: true, upsert: true }
+    );
+    res.status(200).json({ message: "Profile updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(409).json({ message: error.message });
   }
 });
 
