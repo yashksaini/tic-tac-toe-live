@@ -5,6 +5,7 @@ import { BASE_URL } from "../main";
 import { useSelector } from "react-redux";
 import activeLogo from "@assets/active_users.jpg";
 import Banner from "../components/Banner";
+import { toast } from "react-toastify";
 
 const Dashboard = ({ socket }) => {
   const [activeUsers, setActiveUsers] = useState([]);
@@ -30,6 +31,7 @@ const Dashboard = ({ socket }) => {
   }, [socket]);
 
   const sendChallenge = (targetUser) => {
+    toast.success(`Challenge sent to ${targetUser?.fullName}`);
     const data = {
       userId: userId,
       fullName: fullName,
