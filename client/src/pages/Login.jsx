@@ -34,7 +34,7 @@ const Login = () => {
             username,
             password,
           },
-          { withCredentials: true }
+          { withCredentials: true, credentials: "include" }
         );
         if (response.data === true) {
           toast.success("Logging In", {
@@ -111,7 +111,7 @@ const Login = () => {
             </button>
           </form>
 
-          <Link to="/signup" className="text-gray-500 text-sm mt-4 block">
+          <Link to="/sign-up" className="text-gray-500 text-sm mt-4 block">
             Don't have an account?{" "}
             <span className="text-primary text-semibold">Sign Up</span>
           </Link>

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Route, useNavigate, Navigate, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -26,8 +26,6 @@ function App({ socket }) {
   const navigate = useNavigate();
   const [gameRoomId, setGameRoomId] = useState("");
 
-  axios.defaults.withCredentials = true;
-
   useEffect(() => {
     let currName = fullName;
     const getAuth = async () => {
@@ -45,8 +43,7 @@ function App({ socket }) {
       }
     };
     getAuth();
-    socket.on("profileVisit", ({ visitedUserId, visitorName }) => {
-      console.log(visitedUserId);
+    socket.on("profileVisit", ({ visitorName }) => {
       toast(`${visitorName} visited your profile.`);
     });
 
@@ -137,7 +134,7 @@ function App({ socket }) {
           {!isAuth && (
             <>
               <Route element={<Login />} path="/" />
-              <Route element={<Signup />} path="/signup" />
+              <Route element={<Signup />} path="/sign-up" />
             </>
           )}
 
@@ -162,7 +159,10 @@ function App({ socket }) {
           )}
 
           {/* Redirect unauthenticated users to Login for undefined routes */}
-          {!isAuth && <Route element={<Navigate to="/" />} />}
+          {!isAuth && <Route element={<Login />} path="*" />}
+
+          {/* Redirect unauthenticated users to Login for undefined routes */}
+          {isAuth && <Route path="*" element={<Navigate to="/" />} />}
         </Routes>
       </div>
 

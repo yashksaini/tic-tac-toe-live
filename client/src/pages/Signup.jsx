@@ -44,7 +44,7 @@ const Signup = () => {
             username,
             password,
           },
-          { withCredentials: true }
+          { withCredentials: true, credentials: "include" }
         );
         console.log(response);
         if (response.data === true) {
