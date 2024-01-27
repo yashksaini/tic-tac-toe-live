@@ -29,7 +29,7 @@ const Players = () => {
         heading={"Server Players List"}
         subheading={"#visitprofile"}
       />
-      <div className="p-4 w-full border-t mt-4 md:max-w-lg md:mx-auto md:p-0">
+      <div className="p-4 w-full border-t mt-4 md:max-w-lg md:mx-auto md:p-2 md:pb-4">
         {allUsers?.map((user) => (
           <div
             key={user.userId}

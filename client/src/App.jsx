@@ -17,6 +17,8 @@ import { BASE_URL } from "./main";
 import GameRoom from "./admin/GameRoom";
 import Players from "./admin/Players";
 import ProfileVisits from "./admin/ProfileVisits";
+import { FiCheckCircle } from "react-icons/fi";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 function App({ socket }) {
   const dispatch = useDispatch();
@@ -169,21 +171,23 @@ function App({ socket }) {
       <ToastContainer position="top-right" autoClose={1000} />
       {/* Challenge Popup */}
       {showChallengePopup && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-md">
-            <p>{`${challangerData?.fullName} challanged you for a game?`}</p>
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-[51] p-4">
+          <div className="bg-white p-12 rounded-3xl w-[480px] max-w-full text-center">
+            <b className="text-2xl mb-2">{challangerData?.fullName}</b>
+            <p className="mb-8">Challanged you for a game?</p>
             <div className="mt-4 flex justify-between">
               <button
-                className="bg-green-500 text-white px-4 py-2 rounded"
+                className="bg-green-500 text-white px-4 py-2 rounded-full"
                 onClick={() => handleChallengeResponse("accept")}
               >
-                Accept
+                <FiCheckCircle className="mr-1 inline" /> <span>Accept</span>
               </button>
               <button
-                className="bg-red-500 text-white px-4 py-2 rounded"
+                className="bg-red-500 text-white px-4 py-2 rounded-full"
                 onClick={() => handleChallengeResponse("decline")}
               >
-                Decline
+                <IoIosCloseCircleOutline className="mr-1 inline" />{" "}
+                <span>Decline</span>
               </button>
             </div>
           </div>

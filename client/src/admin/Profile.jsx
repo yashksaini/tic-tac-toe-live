@@ -120,7 +120,7 @@ const Profile = ({ socket }) => {
               @{userData?.username}
             </p>
           </div>
-          <div className="w-full p-4 border-t mt-4 grid grid-cols-2 gap-4 text-dark1 md:max-w-lg md:mx-auto relative z-[-1]">
+          <div className="w-full p-4 border-t mt-4 grid grid-cols-2 gap-4 text-dark1 md:max-w-lg md:mx-auto relative">
             <div className="absolute w-32 h-32 top-[calc(50%_-_64px)] left-[calc(50%_-_64px)] rounded-full bg-background border flex justify-center items-center flex-col">
               <span className="text-[36px] font-bold text-primary">
                 {userData?.points}

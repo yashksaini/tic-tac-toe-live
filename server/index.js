@@ -46,6 +46,8 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 
+// Trust the first proxy in the chain
+app.set("trust proxy", 1);
 app.use(
   session({
     secret: "asdfefna",
@@ -56,6 +58,7 @@ app.use(
       maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days in milliseconds
       httpOnly: true,
       secure: false,
+      // sameSite: "none",
     },
   })
 );

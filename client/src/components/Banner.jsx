@@ -3,7 +3,7 @@ import logo from "@assets/logo.png";
 const Banner = ({ bannerImage, heading, subheading }) => {
   return (
     <>
-      <div className="h-40 w-full bg-dark2 rounded-bl-[32px] rounded-br-[32px] md:rounded-none">
+      <div className="h-40 w-full bg-dark2 rounded-b-full md:rounded-none">
         <div className="w-full flex flex-1 gap-1 justify-center items-center py-4">
           <img src={logo} alt="Logo" className="w-10 h-10 " />
           <span className="text-white text-xl font-bold tracking-tighter mt-[4px]">

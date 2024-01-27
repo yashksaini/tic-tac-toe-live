@@ -64,7 +64,7 @@ const Navbar = () => {
         </button>
       </div>
       {/* Mobile Navbar */}
-      <div className="w-full grid grid-cols-5 overflow-hidden gap-2 fixed bottom-0 left-0 h-16 bg-background rounded-tl-3xl rounded-tr-3xl md:hidden border">
+      <div className="w-full grid grid-cols-5 overflow-hidden gap-2 fixed bottom-0 left-0 h-16 bg-background rounded-tl-3xl rounded-tr-3xl md:hidden border z-50">
         {navLinks.map((item, index) => {
           return (
             <NavLink
