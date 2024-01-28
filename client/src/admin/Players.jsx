@@ -30,9 +30,9 @@ const Players = () => {
         subheading={"#visitprofile"}
       />
       <div className="p-4 w-full border-t mt-4 md:max-w-lg md:mx-auto md:p-2 md:pb-4">
-        {allUsers?.map((user) => (
+        {allUsers?.map((user, index) => (
           <div
-            key={user.userId}
+            key={index}
             className="flex items-center justify-between w-full px-4 py-2 md:py-4 bg-background border text-dark1 rounded mt-4 gap-2"
           >
             <span className="text-xl font-bold flex-1">{user?.fullName}</span>

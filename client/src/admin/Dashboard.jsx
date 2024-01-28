@@ -54,9 +54,9 @@ const Dashboard = ({ socket }) => {
       <div className="px-4 w-full border-t mt-4 md:max-w-lg md:mx-auto md:p-4">
         {activeUsers
           ?.filter((data) => data.fullName !== fullName)
-          ?.map((user) => (
+          ?.map((user, index) => (
             <div
-              key={user.userId}
+              key={index}
               className="flex items-center justify-between w-full px-2 py-2 md:py-4 bg-background border text-dark1 rounded-xl mt-4 gap-2"
             >
               <span className="text-3xl">
