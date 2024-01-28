@@ -6,6 +6,7 @@ import store from "./redux/store.js";
 import { io } from "socket.io-client";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 export const BASE_URL = "http://localhost:3000";
 // export const BASE_URL = "https://xo-connect.onrender.com";
@@ -18,3 +19,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </Provider>
   </BrowserRouter>
 );
+serviceWorkerRegistration.register();
