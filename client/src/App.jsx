@@ -104,7 +104,7 @@ function App({ socket }) {
     if (!socket.connected) {
       toast.warning("Server is sleeping. Refresh", {
         position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
+        autoClose: 2000,
         closeOnClick: false,
         closeButton: false,
         draggable: false,
