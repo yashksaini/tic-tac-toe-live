@@ -158,7 +158,7 @@ function App({ socket }) {
       </div>
 
       <ToastContainer position="top-right" autoClose={1000} />
-      {/* Challenge Popup */}
+      {/* Challenge Popup over any screen on application*/}
       {showChallengePopup && (
         <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-[51] p-4">
           <div className="bg-white p-12 rounded-3xl w-[480px] max-w-full text-center">
